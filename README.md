@@ -5,7 +5,7 @@
 `git clone https://github.com/yodaylay22/crud-quata.git && cd crud-quata && php artisan serve`
 
 
-# 📖Imagens:
+# 📖Imagens
 
 ## Menu do sistema deslogado
 ![image](https://user-images.githubusercontent.com/12820569/131266954-b690408c-a733-47be-8d40-3f8866b1c71b.png)
