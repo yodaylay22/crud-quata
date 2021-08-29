@@ -18,7 +18,7 @@
             <div class="card" >
 
                 <div class="card-body">
-                    <h3 class="card-title">Editar Usuário</h3>
+                    <h3 class="card-title">Informações do Usuário</h3>
                     <hr>
                     <form method="POST" action="" id="mainform">
                         @csrf
