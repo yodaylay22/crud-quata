@@ -10,7 +10,8 @@
 
                 <div class="card-body">
                     <h3 class="card-title">Cadastrar Usuário</h3>
-                    <form method="POST" action="{{ route('add') }}">
+                    <hr>
+                    <form method="POST" action="{{ route('add') }}" id="mainform">
                         @csrf
 
                         <div class="row justify-content-center">
@@ -18,8 +19,8 @@
 
                                 <div class="form-group mb-4">
                                     <label class="control-label ">Nome:</label>
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                    @error('name')
+                                    <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('name') }}" required autocomplete="nome" autofocus>
+                                    @error('nome')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -38,7 +39,7 @@
 
                                 <div class="form-group mb-4">
                                     <label class="control-label">Senha:</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="senha" required autocomplete="new-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -118,5 +119,50 @@
     </div>
 </div>
 
+<script>
+
+    $('#mainform').submit(function(e){
+        e.preventDefault();
+
+        var data = $(this).serialize();
+        console.log(data);
+        $.ajax({
+            url: "{{ route('add.do') }}",
+            type: "post",
+            data: data,
+            dataType: "json",
+            success: function(response){
+                console.log(response)
+                if(response.success === false){
+                    //alert(response.message)
+                    Swal.fire({
+                        icon: 'error',
+                        title: response.message,
+                        showConfirmButton: true
+                    })
+                }else{
+
+                
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Usuário cadastrado com sucesso!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        window.location.href= "{{ route('main') }}"    
+                    })
+
+                    
+                }
+            },
+            error: function(response){
+                console.log(response);
+            }
+        })
+
+
+    });
+
+</script>
 
 @endsection

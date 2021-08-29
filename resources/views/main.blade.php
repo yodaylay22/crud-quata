@@ -19,12 +19,12 @@
         
                         <div class="card-body">
                             <h3 class="card-title" style="color: #000000;">Usuários</h3>
-                            <br>
+                            <hr>
                             <div class="col-md-4 justify-content-left">
                                 <a href="{{ route('add') }}" class="btn btn-primary">Cadastrar</a>
                             </div>
                             <div id="div-tabela-resultados" class="table-responsive p-5">
-                                <table hidden class="table table-bordered table-hover tabelaDataTable">
+                                <table hidden class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th colspan="1">Usuário</th>
@@ -56,7 +56,7 @@
                                     </tbody>
                                 </table>
 
-                                <table class="table">
+                                <table class="table table-bordered table-hover text-center tabelaDataTable">
                                     <thead>
                                         <tr>
                                            
@@ -71,7 +71,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($usuarios as $usuario)
-                                        <tr>
+                                        <tr class="">
                                             
                                             <td>{{$usuario->nome}} </td>
                                             <td>{{$usuario->email}} </td>
@@ -99,9 +99,5 @@
                 </div>
             </div>
         </div>
-
-
-
-       
  
     @endsection

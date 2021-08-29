@@ -9,6 +9,7 @@
 
                 <div class="card-body">
                     <h3 class="card-title">{{ __('Trocar Senha') }}</h3>
+                    <hr>
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}

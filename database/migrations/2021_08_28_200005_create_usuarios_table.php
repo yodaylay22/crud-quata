@@ -22,7 +22,9 @@ class CreateUsuariosTable extends Migration
             $table->boolean('status');
             $table->integer('idade');
             $table->float('saldo');
-            $table->text('observacoes');
+            $table->text('observacao')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             
         });
     }

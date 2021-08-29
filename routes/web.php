@@ -20,9 +20,20 @@ Route::get('/home', function() {
     return Redirect::to('/');
 });
 
-Route::get('/add', [MainController::class, 'add'])->name('add');
-Route::get('/edit', [MainController::class, 'edit'])->name('edit')->middleware('auth');
-Route::get('/view', [MainController::class, 'view'])->name('view');
+Route::get('/add', function (){ 
+    return view('user.add'); })->name('add');
+Route::post('/add.do', [MainController::class, 'add'])->name('add.do');
+Route::get('/add.do', function (){ 
+    return Redirect::to('/'); });
+
+Route::get('/edit', function (){ 
+    return view('user.edit'); })->name('edit');
+Route::post('/edit.do', [MainController::class, 'edit'])->name('edit.do');
+Route::get('/edit.do', function (){ 
+    return Redirect::to('/'); });
+
+// Route::get('/edit', [MainController::class, 'edit'])->name('edit')->middleware('auth');
+
 
 Auth::routes();
 
