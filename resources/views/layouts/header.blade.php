@@ -6,7 +6,7 @@
          <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Quatá Crud</title>
-        <link rel="shortcut icon" href="/img/favicon.png" />
+        <link rel="shortcut icon" href="https://www.quatainvestimentos.com.br/wp-content/uploads/2016/08/icon.png">
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -65,18 +65,6 @@
                 cursor: no-drop;
             }
 
-            .form-control:disabled, .form-control[readonly] {
-                background-color:  #3b3f5c;
-                cursor: no-drop;
-                color: #d3d3d3;
-            }
-
-            .custom-control-input:disabled~.custom-control-label::before,
-            .custom-control-input[disabled]~.custom-control-label::before {
-                background-color:  #3b3f5c;
-                cursor: no-drop;
-            }
-
             .form-control {
                 height: auto;
                 border: 1px solid #000;
@@ -105,10 +93,10 @@
             }
 
             .logo-quata {
-                background-image: repeating-linear-gradient(45deg, #133A1D, #3C6042);
-                color: #ffffff;
-                background-size: 300% 100%;
-                animation: bgAnim 5s ease infinite;
+                background-image: repeating-linear-gradient(45deg, #133A1D, #3C6042, #6eac78) !important;
+                color: #ffffff !important;
+                background-size: 300% 100% !important;
+                animation: bgAnim 5s ease infinite !important;
             }
 
             .nav-link {
@@ -134,11 +122,10 @@
         </style>
     </head>
     <body class="antialiased">
-        
 
         <nav class="navbar navbar-expand-lg" style="background-color: rgb(240, 240, 240) !important;">
             
-            <button class="btn logo-quata">Quatá</button>
+            <a href="{{ route('main') }}" class="btn btn-success logo-quata" style="">Quatá</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -196,53 +183,6 @@
 
 <script>
 
-$(document).ready(function () {
 
-	$(function () {
-		$('[data-toggle="popover"]').popover()
-	});
-
-	$(function () {
-		$('[data-toggle="tooltip"]').tooltip()
-	});
-
-	$('.tabelaDataTable').DataTable({
-		responsive: true,
-		dom: '<"html5buttons"B>lTfgitp',
-		buttons: [
-			{ extend: 'copy' },
-			{ extend: 'csv' },
-			{ extend: 'excel', title: 'ExampleFile' },
-			{ extend: 'pdf', title: 'ExampleFile' },
-
-			{
-				extend: 'print',
-				customize: function (win) {
-					$(win.document.body).addClass('white-bg');
-					$(win.document.body).css('font-size', '10px');
-
-					$(win.document.body).find('table')
-						.addClass('compact')
-						.css('font-size', 'inherit');
-				}
-			}
-		],
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-		"language": {
-			"lengthMenu": "Mostrando _MENU_ registros por página",
-			"zeroRecords": "Nenhum registro disponível",
-			"info": "Mostrando página _PAGE_ de _PAGES_ (_TOTAL_ registros)",
-			"infoEmpty": "Mostrando página 0 de 0 (0 registros)",
-			"infoFiltered": "(filtrado de _MAX_ registros)",
-			"search": "Buscar:",
-			"paginate": {
-				"first": "Primeira",
-				"previous": "Anterior",
-				"next": "Próximo",
-				"last": "Última"
-			}
-		}
-	});
-});
 
 </script>

@@ -3,13 +3,6 @@
     @extends('layouts.header')
 
     @section('content')
-
-        {{-- <pre>
-        @php
-            print_r($usuarios);
-        @endphp
-        </pre> --}}
-
         
         <div class="container">
             <div class="row justify-content-center">
@@ -20,41 +13,11 @@
                         <div class="card-body">
                             <h3 class="card-title" style="color: #000000;">Usuários</h3>
                             <hr>
-                            <div class="col-md-4 justify-content-left">
-                                <a href="{{ route('add') }}" class="btn btn-primary">Cadastrar</a>
+                            <div class="col-md-4 justify-content-left pl-5">
+                                <a href="{{ route('add') }}" class="btn btn-primary"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Cadastrar</a>
                             </div>
-                            <div id="div-tabela-resultados" class="table-responsive p-5">
-                                <table hidden class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="1">Usuário</th>
-                                            <th colspan="1">Nivel de Acesso</th>
-                                            <th colspan="1">Status</th>
-                                            <th colspan="1">Opções</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                            
-                                        <tr>
-                                            <td>Carlos</td>
-                                            <td>Admin</td>
-                                            <td>Ativo</td>
-                                            
-                                            <td>
-                                        
-                                                <a href="" class="btn btn-cyan btn-xs" target="_blank"><i class="fas fa-info" style="width:40px; height: 40px;"></i></a>
-                                        
-                                                <a href="" class="btn btn-yellow btn-xs"><i class="fas fa-user-edit" style="width:40px; height: 40px;"></i></a>
-                                        
-                                                <a href="" class="btn btn-danger btn-xs" ><i class="fas fa-trash-alt"></i style="width:40px; height: 40px;"></a>
-                                                
-                                            </td>
-                                        </tr>
-        
-                                       
-                                    </tbody>
-                                </table>
+                            <br>
+                            <div id="div-tabela-resultados" class="table-responsive pl-5 pr-5">
 
                                 <table class="table table-bordered table-hover text-center tabelaDataTable">
                                     <thead>
@@ -75,16 +38,38 @@
                                             
                                             <td>{{$usuario->nome}} </td>
                                             <td>{{$usuario->email}} </td>
-                                            <td>{{$usuario->role}} </td>
-                                            <td>{{$usuario->idade}} </td>
-                                            <td>{{$usuario->saldo}} </td>
+                                            <td>
+                                                @php
+                                                    switch ($usuario->role) {
+                                                        case 0:
+                                                            echo '<span class="badge bg-secondary text-white">Básico</span>';
+                                                            break;
+                                                        case 1:
+                                                            echo '<span class="badge bg-danger text-white">Admin</span>';
+                                                            break;
+                                                        case 2:
+                                                            echo '<span class="badge bg-warning">Desenvolvedor</span>';
+                                                            break;
+                                                        default:
+                                                            echo '<span class="badge bg-secondary text-white">Básico</span>';
+                                                            break;
+                                                    }    
+                                                @endphp
+                                            
+                                            </td>
+                                            <td>{{$usuario->idade}} anos</td>
+                                            <td>@php 
+                                                    
+                                                    echo 'R$ '.number_format($usuario->saldo, 2, ",", ".");
+                                                
+                                                @endphp </td>
                                             <td>
 
-                                                <a href="/view/{{$usuario->id}}" class="btn btn-info btn-xs" target="_blank"><i class="fas fa-info"></i></a>
+                                                <a href="/view/{{$usuario->id}}" style="width: 42px;" class="btn btn-info btn-xs"><i class="fas fa-info"></i></a>
                                                 @auth
-                                                    <a href="/edit/{{$usuario->id}}" class="btn btn-warning btn-xs"><i class="fas fa-user-edit"></i></a>
+                                                    <a href="/edit/{{$usuario->id}}" style="width: 42px;" class="btn btn-warning btn-xs"><i class="fas fa-user-edit"></i></a>
                                             
-                                                    <a href="" class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="javascript:void(0)" style="width: 42px;" onclick="deletarUsuario({{$usuario->id}}, '{{$usuario->nome}}')" class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i></a>
                                                 @endauth
                                             </td>
                                         </tr>
@@ -99,5 +84,67 @@
                 </div>
             </div>
         </div>
- 
+        
+        <script>
+
+            function deletarUsuario(id, nome){
+                
+                Swal.fire({
+                    title: 'Deseja deletar '+nome+'?',
+                    text: "Você não pode reverter isso!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Deletar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                        
+
+                        $.ajax({
+                            url: "{{ route('delete') }}",
+                            type: "post",
+                            data: {"id":id,"nome":nome},
+                            dataType: "json",
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            success: function(response){
+                                console.log(response)
+                                if(response.success === false){
+                                    //alert(response.message)
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: response.message,
+                                        showConfirmButton: true
+                                    })
+                                }else{
+                                
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Usuário deletado com sucesso!',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then((result) => {
+                                        window.location.href= "{{ route('main') }}"    
+                                    })
+                                    
+                                }
+                            },
+                            error: function(response){
+                                console.log(response);
+                            }
+                        });
+
+                    }
+                })
+
+
+            }
+            
+
+
+
+        </script>
+
     @endsection

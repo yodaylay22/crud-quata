@@ -62,19 +62,6 @@
                                 </div>
 
                                 <div class="form-group mb-4">
-                                    <label class="control-label ">Status:</label>
-                                    <select id="status" class="form-control @error('status') is-invalid @enderror" name="status">
-                                        <option value="1">Ativo</option>
-                                        <option value="0">Inativo</option>
-                                    </select>
-                                    @error('status')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group mb-4">
                                     <label class="control-label">Idade:</label>
                                     <input id="idade" min="1" step="1"  onkeydown="if(event.key==='.'){event.preventDefault();}" onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} " type="number" class="form-control @error('idade') is-invalid @enderror" name="idade" required>
                                     @error('idade')
@@ -86,7 +73,7 @@
 
                                 <div class="form-group mb-4">
                                     <label class="control-label">Saldo:</label>
-                                    <input id="saldo" type="number" class="form-control @error('saldo') is-invalid @enderror" name="saldo" required>
+                                    <input id="saldo" type="number" step="0.01" class="form-control @error('saldo') is-invalid @enderror" name="saldo" required>
                                     @error('saldo')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -131,6 +118,7 @@
             type: "post",
             data: data,
             dataType: "json",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             success: function(response){
                 console.log(response)
                 if(response.success === false){

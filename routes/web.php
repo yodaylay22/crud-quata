@@ -26,13 +26,21 @@ Route::post('/add.do', [MainController::class, 'add'])->name('add.do');
 Route::get('/add.do', function (){ 
     return Redirect::to('/'); });
 
+Route::get('/edit/{id}', [MainController::class, 'editload'])->name('edit');
 Route::get('/edit', function (){ 
-    return view('user.edit'); })->name('edit');
+    return Redirect::to('/'); });
+
 Route::post('/edit.do', [MainController::class, 'edit'])->name('edit.do');
 Route::get('/edit.do', function (){ 
     return Redirect::to('/'); });
 
-// Route::get('/edit', [MainController::class, 'edit'])->name('edit')->middleware('auth');
+Route::post('/delete', [MainController::class, 'delete'])->name('delete');
+Route::get('/delete', function (){ 
+    return Redirect::to('/'); });
+
+Route::get('/view/{id}', [MainController::class, 'view'])->name('view');
+Route::get('/view', function (){ 
+    return Redirect::to('/'); });
 
 
 Auth::routes();
