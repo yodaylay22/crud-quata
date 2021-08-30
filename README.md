@@ -1,7 +1,7 @@
 <h1>CRUD Quatá investimentos</h1>
 
 
-⚙ Comando único para instalar o projeto:<br>
+⚙ Comando único para instalar e rodar o projeto:<br>
 `git clone https://github.com/yodaylay22/crud-quata.git && cd crud-quata && php artisan serve`
 
 📚 Caminho para o log de usuário:<br>
